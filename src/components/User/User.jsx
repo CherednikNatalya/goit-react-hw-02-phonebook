@@ -1,21 +1,22 @@
 import { nanoid } from 'nanoid'
 
-const newUser ={
-    id : nanoid(),
-    name: nanoid(),
-}
-export const User =({id, name}) => {
+export const User =({users, onDelete}) => {
+const id = nanoid()
+// const {id, name} = user
+    // handleDeleteUser = event => {
+    //     onDelete(id)
+    // }
     
     return(
         <>
             <h2>Contacts</h2>
             <ul>
-            {this.state.users.map(user =>(
-                <li key={user.id}>
-<p>{user={user.name}}</p>
+            {users.map(user =>(
+                <li key={id}>
+<p>{users.name}</p>
 <button
 text="Delete Contact"
-deleteContact={this.handleDeleteContact}/>
+deleteContact={this.handleDeleteUser}/>
                 </li>
             ))}
             </ul>
