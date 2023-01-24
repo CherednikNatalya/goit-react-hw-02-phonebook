@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { nanoid } from 'nanoid'
-// import css from './PhoneBookForm.module.css';
-// import { PropTypes } from 'prop-types';
+import css from './Form.module.css';
+import { PropTypes } from 'prop-types';
 
 export class Form extends Component {
   state = {
@@ -22,7 +22,6 @@ export class Form extends Component {
     handleSubmit = event => {
         event.preventDefault()
         const { name, number } = this.state;
-        // console.dir(this.props.onSubmit);
         this.props.onSubmitForm({ name, number });
         this.setState({name:'', number:''})
     }
@@ -35,10 +34,11 @@ export class Form extends Component {
 <form onSubmit={this.handleSubmit}>
     <h2>Phonebook</h2>
     <div className="mb-3">
-          <label htmlFor={this.nameId} className="form-label">
+          <label htmlFor={this.nameId} className={css.labelStyle}>
             <p>Name</p>
           </label>
         <input
+        className={css.inputStyle}
         id={this.nameId}
   type="text"
   name="name"
@@ -51,7 +51,7 @@ export class Form extends Component {
 </div>
 
 <div className="mb-3">
-          <label htmlFor={this.numberId} className="form-label">
+          <label htmlFor={this.numberId} className={css.labelStyle}>
             <p>Number</p>
           </label>
         <input
@@ -66,20 +66,18 @@ export class Form extends Component {
 />
 </div>
 
-<button className="btn btn-primary" type="submit" >
+<button className={css.addButton} type="submit" >
           Add contact
         </button>
-
 </form>
-
         )
     }
 }
 
 
-// Form.propTypes = {
-//   onSubmitForm: PropTypes.object,
-// }
+Form.propTypes = {
+  onSubmitForm: PropTypes.func.isRequired,
+}
 
 
 

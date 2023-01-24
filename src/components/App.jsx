@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import { nanoid } from 'nanoid'
 
+import {Section} from './Section/Section'
 import {Form} from './Form/Form'
 import {ContactsList} from './User/ContactsList'
 import {FilterByName} from './FilterByName/FilterByName'
@@ -56,24 +57,20 @@ const contactsToDisplay = this.contactListToDisplay(
     
       return (
     <>
+    <Section>
     <Form 
     onSubmitForm={this.handleSubmitForm}/>
+    </Section>
 
-    <ContactsList contactList={contactsToDisplay}
-            onDelete={this.handleDeleteContact}/>
-
-    {/* <FilterByName/> */}
+    <Section>
+    <FilterByName 
+    filter ={filter}
+    onChange={this.handleFilterChange}/>
+    <ContactsList 
+    contactList={contactsToDisplay}
+    onDelete={this.handleDeleteContact}/> 
+    </Section>
 </>
-// {/* <div>
-//   <h1>Phonebook</h1>
-//   <ContactForm ... />
-
-//   <h2>Contacts</h2>
-//   <Filter ... />
-//   <ContactList ... />
-// </div> */}
-
-
   );
   };
 };
