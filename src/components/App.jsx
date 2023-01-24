@@ -3,7 +3,7 @@ import { nanoid } from 'nanoid'
 
 import {Form} from './Form/Form'
 import {ContactsList} from './User/ContactsList'
-// import {FilterByName} from './FilterByName/FilterByName'
+import {FilterByName} from './FilterByName/FilterByName'
 
 export class App extends Component {
  
@@ -14,67 +14,36 @@ export class App extends Component {
     number: ''
   }
 
-  changeFilter = e => {
-    this.setState({ filter: e.currentTarget.value });
-  };
+  isContactInState = ({ name, number }) =>
+  !!this.state.contacts.filter(({ name: prevName, number: prevNumber }) => {
+    return prevName === name && prevNumber === number;
+  }).length;
 
-
-  getVisibleTodos = () => {
-    const { filter, todos } = this.state;
-    const normalizedFilter = filter.toLowerCase();
-  
-    return todos.filter(todo =>
-      todo.text.toLowerCase().includes(normalizedFilter),
-    );
-  };
-
-
-addContact = contacts => {
-  const contact ={
-    id : nanoid(),
-    name: '',
-    number: ''
+handleSubmitForm = ({ name, number }) => {
+  if (this.isContactInState({ name, number })) {
+    alert('Contact is in phonebook');
+    return;
   }
 
-  this.setState (({contacts}) =>({
-    contacts: [contact, ...contacts],
-  }))
-}
-  
-  handleSubmitForm = data => {
-    console.log(data);
-  }
+  this.setState(({ contacts: prevContacts }) => ({
+    contacts: [...prevContacts, { id: nanoid(), name, number }],
+  }));
+};
 
-
-  handleChange = event=>{
-    const { name, value } = event.target;
-    this.setState ({[name]: value})
-}
-
+handleFilterChange = evt => {
+  this.setState({ filter: evt.currentTarget.value });
+};
 
 filterNormalize = filter => filter.toLowerCase();
 
-  contactListToDisplay = (contacts, filter) =>
-    contacts.filter(({ name }) => name.toLowerCase().includes(filter));
+contactListToDisplay = (contacts, filter) =>
+  contacts.filter(({ name }) => name.toLowerCase().includes(filter));
 
-  handleDelete = id => {
-this.setState(({contacts}) =>{
-  const newUserList =contacts.filter(contact =>contact.id !==id)
-  return {contact: newUserList}
-})
-  }
-
-
-  // handleSubmitForm = ({ name, number }) => {
-  //   if (this.isContactInState({ name, number })) {
-  //     alert('Contact is in phonebook');
-  //     return;
-  //   }
-
-  //   this.setState(({ contacts: prevContacts }) => ({
-  //     contacts: [...prevContacts, { id: nanoid(), name, number }],
-  //   }));
-  // };
+handleDeleteContact = id => {
+  this.setState(({ contacts: prevContacts }) => ({
+    contacts: prevContacts.filter(({ id: contactId }) => contactId !== id),
+  }));
+};
 
   render () {
 

@@ -17,11 +17,12 @@ export const Contact = ({ contact: { id, name, number }, onDelete }) => {
   );
 };
 
-Contact.propTypes = {
+Contact.propTypes ={
   contact: PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     number: PropTypes.string.isRequired,
   }),
-    onDelete:PropTypes.func.isRequired
-};
+  onDelete: PropTypes.func.isRequired
+}
+
