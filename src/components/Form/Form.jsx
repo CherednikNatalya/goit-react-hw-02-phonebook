@@ -1,54 +1,68 @@
 import { Component } from 'react';
+import { nanoid } from 'nanoid'
+// import css from './PhoneBookForm.module.css';
+// import { PropTypes } from 'prop-types';
 
 export class Form extends Component {
-    state = {
-        name:'',
-        number:'',
-    };
+  state = {
+    name: '',
+    number: ''
+  }
 
-    handleChange = event=>{
-        const { name, value } = event.target;
-        this.setState ({[name]: value})
-    }
+  nameId = nanoid()
+  numberId = nanoid()
+
+  handleChangeInfo = evt => {
+    const { name, value } = evt.currentTarget;
+    this.setState({ [name]: value });
+  };
+
+
 
     handleSubmit = event => {
         event.preventDefault()
+        const { name, number } = this.state;
+        // console.dir(this.props.onSubmit);
+        this.props.onSubmitForm({ name, number });
         this.setState({name:'', number:''})
     }
 
     render () {
-        const {name} = this.state;
+      const { name, number } = this.state;
+        // const { onChange } = this.props;
         
         return(
 <form onSubmit={this.handleSubmit}>
     <h2>Phonebook</h2>
     <div className="mb-3">
-          <label htmlFor="name" className="form-label">
+          <label htmlFor={this.nameId} className="form-label">
             <p>Name</p>
           </label>
         <input
-        id="name"
+        id={this.nameId}
   type="text"
   name="name"
   value={name}
   pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
   title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
   required
-  onChange={this.handleChange}
+  onChange={this.handleChangeInfo}
 />
 </div>
 
 <div className="mb-3">
-          <label htmlFor="number" className="form-label">
+          <label htmlFor={this.numberId} className="form-label">
             <p>Number</p>
           </label>
         <input
-  type="text"
+        id={this.numberId}
+        type="tel"
+  value={number}
   name="number"
-  pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-  title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+  pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+  title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
   required
-  onChange={this.handleChange}
+  onChange={this.handleChangeInfo}
 />
 </div>
 
@@ -63,51 +77,10 @@ export class Form extends Component {
 }
 
 
+// Form.propTypes = {
+//   onSubmitForm: PropTypes.object,
+// }
 
 
 
 
-
-// import { PropTypes } from 'prop-types';
-
-// export const UsersItem = ({ user, onDelete }) => {
-//   const { id, name, email, bio, skills, isOpenToWork } = user;
-
-//   const handleDelete = () => {
-//     onDelete(id);
-//   };
-
-//   return (
-//     <div className="card my-3">
-//       <div className="card-body">
-//         <h5 className="card-title d-flex">
-//           {name}
-//           {isOpenToWork && (
-//             <p className="badge bg-success ms-3">Open to work</p>
-//           )}
-//         </h5>
-
-//         <h6 className="card-subtitle mb-2 text-muted">{email}</h6>
-//         <p className="card-text">{bio}</p>
-
-//         <div className="d-flex mb-2">
-//           {skills.map(skil => (
-//             <span key={skil} className="badge bg-dark me-1">
-//               {skil}
-//             </span>
-//           ))}
-//         </div>
-
-//         <div className="d-flex">
-//           <button
-//             type="button"
-//             className="card-link btn-link"
-//             onClick={handleDelete}
-//           >
-//             Delete
-//           </button>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
